@@ -7,13 +7,13 @@ This project is a basic ATM system created using Java. It simulates common banki
 ## 🌟 Features
 
 ### 🔐 Secure Access
-- **🔑 PIN and OTP Entry:** Users can access their account by entering a 4-digit PIN and an 8-digit OTP.
+- **🔑 PIN :** Users can access their account by entering a 4-digit PIN.
 
 ### 💵 Banking Transactions
 - **💸 Withdrawal & Deposit:** Users can withdraw or deposit cash, and the balance updates automatically.
 
 ### 📋 Account Management
-- **📜 Transaction History:** Keeps track of your recent transactions like deposits and withdrawals.
+- **📜 Transaction History:** Keeps track of your recent transactions like deposits and withdrawals with accurate Time.
 - **📝 Edit Account Details:** Users can change their PIN or account holder name.
 
 ### 🗂 Data Persistence
