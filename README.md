@@ -4,8 +4,6 @@
 This project is a basic ATM system created using Java. It simulates common banking activities like withdrawing and depositing money, checking balances, and viewing transaction history. All account details are saved in a file for later use!
 </p>
 
----
-
 ## 🌟 Features
 
 ### 🔐 Secure Access
