@@ -11,25 +11,66 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nAutomated Teller Machine\n");
-        System.out.println("Are you a new user? (yes/no): ");
+        System.out.println("Are you a new user? (Yes/No): ");
         String isNewUser = sc.nextLine().trim().toLowerCase();
-
+        int check1=0;
+        do{
+            if(isNewUser.equals("yes")||isNewUser.equals("no"))
+            check1=1;
+            else{
+                System.out.println("Invalid !! Enter Yes/No");
+                isNewUser = sc.nextLine().trim().toLowerCase();
+            }
+        }while(check1==0);
         User user_obj;
         if (isNewUser.equals("yes")) {
             user_obj = new User();
             System.out.print("Enter Your Name: ");
             user_obj.owner = sc.nextLine();
             System.out.print("Set a 4-Digit PIN: ");
-            user_obj.acc_pin = sc.nextInt();
-            sc.nextLine(); // Clear buffer
+            int pin=0;
+            boolean validPin=false;
+        while (!validPin) {
+            try {
+                pin = sc.nextInt();
+                sc.nextLine(); // Clear the buffer
+                // Check if it's a 4-digit number
+                if ((int) Math.log10(pin) + 1 == 4) {
+                    validPin = true; // Exit the loop if valid
+                } else {
+                    System.out.println("Invalid ! Please enter a numeric 4-digit PIN:");
+                }
+            } catch (Exception e) {
+            System.out.println("Invalid ! Please enter a numeric 4-digit PIN:");
+            sc.nextLine(); // Clear the invalid input
+            }
+        }
+            user_obj.acc_pin=pin;
             System.out.println("Account Created Successfully!");
             System.out.println("Your Account Number: " + user_obj.random16DigitNumber);
         } else {
             System.out.print("Enter Your 4-Digit PIN: ");
-            int pin = sc.nextInt();
-            user_obj = new User(); // Placeholder for a real database/account retrieval
-            user_obj.acc_pin = pin; // Assuming PIN verification is done elsewhere
+            user_obj = new User();
+            int pin0=0;
+            boolean validPin0=false;
+        while (!validPin0) {
+            try {
+                pin0 = sc.nextInt();
+                sc.nextLine(); // Clear the buffer
+                // Check if it's a 4-digit number
+                if ((int) Math.log10(pin0) + 1 == 4) {
+                    validPin0 = true; // Exit the loop if valid
+                } else {
+                    System.out.println("Invalid ! Please enter a numeric 4-digit PIN:");
+                }
+            } catch (Exception e) {
+            System.out.println("Invalid ! Please enter a numeric 4-digit PIN:");
+            sc.nextLine(); // Clear the invalid input
+            }
         }
+            user_obj.acc_pin=pin0;
+            System.out.println("Account Created Successfully!");
+            System.out.println("Your Account Number: " + user_obj.random16DigitNumber);
 
         InnerATM inner_obj = new InnerATM(user_obj);
         int choice;
@@ -37,7 +78,7 @@ public class Main {
             System.out.println("\nChoose: ");
             System.out.println("1. Withdraw Cash");
             System.out.println("2. Deposit Cash");
-            System.out.println("3. Current Balance");
+            System.out.println("3. Current Balance & Details");
             System.out.println("4. Edit Details");
             System.out.println("5. View Transaction History");
             System.out.println("6. EXIT!");
@@ -53,23 +94,56 @@ public class Main {
                     break;
                 case 3:
                     inner_obj.UserInfo();
-                    System.out.printf("Current Balance: %.2f\n", user_obj.balance);
+                    System.out.printf("Current Balance: %.2f rs\n", user_obj.balance);
                     break;
                 case 4:
-                    System.out.println("What Would You Like to Edit:\n1. PIN Change\n2. Account Holder Name");
-                    int option = sc.nextInt();
-                    sc.nextLine(); // Clear buffer
+                    
+                        System.out.println("What Would You Like to Edit:\n1. PIN Change\n2. Account Holder Name");
+                        int option = 0;
+                        boolean validOption = false;
+                        while (!validOption) {
+                            try {
+                                option = sc.nextInt();
+                                sc.nextLine(); // Clear buffer
+                                if (option == 1 || option == 2) {
+                                     validOption = true;
+                                } else {
+                                     System.out.println("Invalid choice! Please select 1 or 2.");
+                                }
+                            }catch (Exception e) {
+                                    System.out.println("Invalid input! Please enter 1 or 2.");
+                                    sc.nextLine(); // Clear invalid input
+                            }
+                     }
+                    int pin=0;
                     if (option == 1) {
                         System.out.print("Enter Your NEW PIN: ");
-                        user_obj.acc_pin = sc.nextInt();
+                        boolean validPin = false;
+                        
+                    while (!validPin) {
+                        try {
+                            pin = sc.nextInt();
+                            sc.nextLine(); // Clear buffer
+                            if ((int) Math.log10(pin) + 1 == 4) {
+                                validPin = true;
+                            } else {
+                                System.out.println("Invalid! Please enter a numeric 4-digit PIN:");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Invalid! Please enter a numeric 4-digit PIN:");
+                            sc.nextLine(); // Clear invalid input
+                        }
+                    }
+                    user_obj.acc_pin = pin;
+                    System.out.println("PIN updated successfully!");
                     } else if (option == 2) {
-                        System.out.print("Enter Your New Name: ");
+                        System.out.print("Enter Your NEW Account Holder Name: ");
                         user_obj.owner = sc.nextLine();
-                    } else {
-                        System.out.println("Invalid Option!");
+                         System.out.println("Account holder name updated successfully!");
                     }
                     inner_obj.UserInfo();
                     break;
+
                 case 5:
                     user_obj.showTransactionHistory();
                     break;
@@ -79,8 +153,7 @@ public class Main {
                         file.write("Account Number: " + user_obj.random16DigitNumber + "\n");
                         file.write("Account PIN: " + user_obj.acc_pin + "\n");
                     } catch (IOException e) {
-                        System.out.println("Details Not Stored!!");
-                        e.printStackTrace();
+                        System.out.println("");
                     }
                     System.out.println("Thank You.....");
                     break;
@@ -92,7 +165,7 @@ public class Main {
         sc.close();
     }
 }
-
+}
 class User {
     double balance = 0;
     int acc_pin = 0;
