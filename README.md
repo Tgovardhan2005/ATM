@@ -48,3 +48,5 @@ This project is a basic ATM system created using Java. It simulates common banki
 2. Compile the program:
    ```bash
    javac ATM_System.java
+3. Run the Code
+  java ATM_System
